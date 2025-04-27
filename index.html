@@ -5,7 +5,10 @@
   <title>絵合わせゲーム</title>
   <style>
     body { font-family: sans-serif; text-align: center; }
-    #game { display: grid; grid-template-columns: repeat(5, 100px); grid-gap: 10px; justify-content: center; margin-top: 20px; position: relative; }
+    /* ゲームエリアのラッパー */
+    #game { position: relative; display: inline-block; margin-top: 20px; }
+    /* カードグリッド */
+    #board { display: grid; grid-template-columns: repeat(5, 100px); grid-gap: 10px; justify-content: center; }
     .card { width: 100px; height: 100px; cursor: pointer; }
     .card svg { width: 100%; height: 100%; }
     .front { display: none; }
@@ -42,6 +45,8 @@
 <body>
   <h1>絵合わせゲーム</h1>
   <div id="game">
+    <!-- カード配置エリア -->
+    <div id="board"></div>
     <!-- ゲームオーバーオーバーレイ -->
     <div id="overlay"><div id="overlayMessage"></div></div>
   </div>
@@ -75,6 +80,7 @@
       let allowClick = true;
       let matchesFound = 0;
       const game = document.getElementById('game');
+      const board = document.getElementById('board');
       const message = document.getElementById('message');
       const resetButton = document.getElementById('reset');
       const overlay = document.getElementById('overlay');
@@ -96,7 +102,7 @@
           clearInterval(timerInterval);
           allowClick = false;
           // カードクリック無効化
-          game.style.pointerEvents = 'none';
+          board.style.pointerEvents = 'none';
           // オーバーレイでメッセージ表示
           overlayMessage.textContent = 'ゲームオーバー！時間切れです。';
           overlay.classList.add('show');
@@ -109,9 +115,10 @@
       }
 
       function initGame() {
-        game.innerHTML = '';
+        // 前のカードをクリア
+        board.innerHTML = '';
         // クリック可能にリセット
-        game.style.pointerEvents = 'auto';
+        board.style.pointerEvents = 'auto';
         message.textContent = '';
         // オーバーレイ非表示
         overlay.classList.remove('show');
@@ -144,7 +151,7 @@
           card.appendChild(front);
           card.appendChild(back);
           card.addEventListener('click', onCardClick);
-          game.appendChild(card);
+          board.appendChild(card);
         });
       }
 
