@@ -5,7 +5,7 @@
   <title>絵合わせゲーム</title>
   <style>
     body { font-family: sans-serif; text-align: center; }
-    #game { display: grid; grid-template-columns: repeat(5, 100px); grid-gap: 10px; justify-content: center; margin-top: 20px; }
+    #game { display: grid; grid-template-columns: repeat(5, 100px); grid-gap: 10px; justify-content: center; margin-top: 20px; position: relative; }
     .card { width: 100px; height: 100px; cursor: pointer; }
     .card svg { width: 100%; height: 100%; }
     .front { display: none; }
@@ -17,11 +17,11 @@
     /* ゲームオーバー時のオーバーレイ */
     #overlay {
       display: none;
-      /* オーバーレイは透過してクリックを下層に通す */
-      pointer-events: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       background: rgba(0,0,0,0.7);
       justify-content: center;
       align-items: center;
@@ -41,9 +41,10 @@
 </head>
 <body>
   <h1>絵合わせゲーム</h1>
-  <div id="game"></div>
-  <!-- ゲームオーバーオーバーレイ -->
-  <div id="overlay"><div id="overlayMessage"></div></div>
+  <div id="game">
+    <!-- ゲームオーバーオーバーレイ -->
+    <div id="overlay"><div id="overlayMessage"></div></div>
+  </div>
   <p id="timer">経過時間: 00:00</p>
   <p id="message"></p>
   <button id="reset">リセット</button>
