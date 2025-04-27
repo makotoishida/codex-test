@@ -4,11 +4,10 @@
   <meta charset="UTF-8">
   <title>絵合わせゲーム</title>
   <style>
-    /* シンプルな淡い色のグラデーション背景 */
+    /* デフォルトの背景グラデーション（JSでリセットごとに動的に変更） */
     body {
       font-family: sans-serif;
       text-align: center;
-      /* 淡いグラデーション */
       background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     }
     /* ゲームエリアのラッパー */
@@ -44,9 +43,12 @@
       padding: 8px 16px;
       font-size: 16px;
     }
-    /* タイマースタイル */
     #timer {
-      font-size: 18px;
+      font-size: 32px;
+    }
+    h1 {
+      color: blue;
+      font-size: 40px;
     }
     /* ゲームオーバー時のオーバーレイ */
     #overlay {
@@ -126,6 +128,19 @@
       const timerElem = document.getElementById('timer');
       const TIME_LIMIT_MS = 40000; // 40秒の制限時間
 
+      /** ランダムなパステルカラーを生成 */
+      function getRandomPastel() {
+        const h = Math.floor(Math.random() * 360);
+        const s = 70 + Math.random() * 10;
+        const l = 80 + Math.random() * 10;
+        return `hsl(${h}, ${s.toFixed(1)}%, ${l.toFixed(1)}%)`;
+      }
+      /** 背景グラデーションをランダムに設定 */
+      function setRandomBackground() {
+        const c1 = getRandomPastel();
+        const c2 = getRandomPastel();
+        document.body.style.background = `linear-gradient(135deg, ${c1} 0%, ${c2} 100%)`;
+      }
       function shuffle(array) {
         for (let i = array.length - 1; i > 0; i--) {
           const j = Math.floor(Math.random() * (i + 1));
@@ -141,7 +156,7 @@
           // カードクリック無効化
           board.style.pointerEvents = 'none';
           // オーバーレイでメッセージ表示
-          overlayMessage.textContent = 'ゲームオーバー！時間切れです。';
+          overlayMessage.textContent = 'ゲームオーバー!!';
           overlay.classList.add('show');
           return;
         }
@@ -152,6 +167,8 @@
       }
 
       function initGame() {
+        // リセットごとに背景グラデーションを更新
+        setRandomBackground();
         // 前のカードをクリア
         board.innerHTML = '';
         // クリック可能にリセット
