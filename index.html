@@ -4,7 +4,14 @@
   <meta charset="UTF-8">
   <title>絵合わせゲーム</title>
   <style>
-    body { font-family: sans-serif; text-align: center; }
+    /* 背景にランダムな風景画像を表示（Picsum Photos を使用） */
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      /* 1600x900 のランダム画像 */
+      background: url('https://picsum.photos/1600/900?random=1') no-repeat center center fixed;
+      background-size: cover;
+    }
     /* ゲームエリアのラッパー */
     #game { position: relative; display: inline-block; margin-top: 20px; }
     /* カードグリッド */
